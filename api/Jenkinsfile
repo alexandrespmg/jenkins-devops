@@ -1,14 +1,13 @@
 pipeline {
     agent any
     stages {
-        stage ('Unit test') {
+        stage('Example') {
             steps {
-                sh 'docker build -f api/tests/Dockerfile api'
-            }
-        }
-        stage ('Meio') {
-            steps {
-                sh 'echo meio'
+                echo 'Hello World'
+
+                script {
+                     docker.build("my-image:${env.BUILD_ID}", "-f api/tests/Dockerfile api")
+                }
             }
         }
     }
