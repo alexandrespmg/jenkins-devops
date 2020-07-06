@@ -1,20 +1,15 @@
 pipeline {
-  agent { docker { image 'python:3.7.8-alpine3.12' } }
-  stages {
-    stage('build') {
-      steps {
-        sh 'pip install -r requirements.txt'
-      }
-    }
-    stage('test') {
-      steps {
-        sh 'python test.py'
-      }
-      post {
-        always {
-          junit 'test-reports/*.xml'
+    agent any
+    stages {
+        stage ('Unit test') {
+            steps {
+                sh 'docker build -f api/tests/Dockerfile api'
+            }
         }
-      }
+        stage ('Meio') {
+            steps {
+                sh 'echo meio'
+            }
+        }
     }
-  }
 }
