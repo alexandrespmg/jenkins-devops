@@ -1,12 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Example') {
+        stage('Teste unitário') {
             steps {
-                echo 'Hello World'
-
                 script {
-                     docker.build("my-image:${env.BUILD_ID}", "-f api/tests/Dockerfile api")
+                     docker.build("api-test:${env.BUILD_ID}", "-f api/tests/Dockerfile api")
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                     docker.build("api-dev:${env.BUILD_ID}", "-f api/Dockerfile api")
                 }
             }
         }
